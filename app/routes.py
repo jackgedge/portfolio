@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, send_file, send_from_directory
+from flask import Blueprint, render_template, send_file, send_from_directory, after_this_request
 from .webdav import get_folders, get_folder_images, get_image
+import os
 
 main_bp = Blueprint("main", __name__)
 
@@ -26,10 +27,19 @@ def folder(folder):
         images=images,
         folder=folder)
 
-@main_bp.route('/<folder>/<image>')
+@main_bp.route("/<folder>/<image>")
 def image(folder, image):
     local_path = get_image(folder, image)
+
+    @after_this_request
+    def delete_temp_file(response):
+        try:
+            os.unlink(local_path)
+        except FileNotFoundError:
+            pass
+        return response
+
     return send_file(
         local_path,
-        mimetype="image/jpeg"
+        mimetype="image/jpeg",
     )

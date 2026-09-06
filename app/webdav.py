@@ -36,17 +36,31 @@ def get_folder_images(folder):
     return images
 
 def get_image(folder, image):
-    remote_path = f"{PORTFOLIO_DIR}/{folder}/{image}".replace('//', '/')
+    remote_path = (
+        f"{PORTFOLIO_DIR.rstrip('/')}/"
+        f"{folder.strip('/')}/"
+        f"{image.lstrip('/')}"
+    )
+
     extension = os.path.splitext(image)[1]
+
     temp_file = tempfile.NamedTemporaryFile(
         suffix=extension,
-        delete=False
+        delete=False,
     )
+    temp_path = temp_file.name
     temp_file.close()
 
-    client.download_sync(
-        remote_path=remote_path,
-        local_path=temp_file.name
-    )
+    try:
+        client.download_sync(
+            remote_path=remote_path,
+            local_path=temp_path,
+        )
+        return temp_path
 
-    return temp_file.name
+    except Exception:
+        try:
+            os.unlink(temp_path)
+        except FileNotFoundError:
+            pass
+        raise
