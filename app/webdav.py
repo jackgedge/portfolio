@@ -1,9 +1,13 @@
 from flask.cli import load_dotenv
 from webdav3.client import Client
+from pathlib import Path
 import os 
 import tempfile
+`
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+ENV_FILE = PROJECT_DIR / ".env"
 
-load_dotenv()
+load_dotenv(ENV_FILE)
 
 hostname: str | None = os.getenv('WEBDAV_HOSTNAME')
 login: str | None = os.getenv('WEBDAV_LOGIN')
