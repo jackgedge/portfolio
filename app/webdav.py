@@ -28,7 +28,7 @@ def get_folders():
 
 def get_folder_images(folder):
     folder_path = f"{PORTFOLIO_DIR}/{folder}"
-    images = client.list(folder_path)
+    images = client.list(folder_path)[1:]
     return images
 
 def get_image(folder, image):

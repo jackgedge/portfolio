@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="gallery">
     {% for image in images %}
-        <li>
-            <a href="{{ url_for('main.image', folder=folder, image=image) }}">
-                {{ image }}
-            </a>
-        </li>
+        <a href="{{ url_for('main.image', folder=folder, image=image) }}">
+            <img
+                src="{{ url_for('main.image', folder=folder, image=image) }}"
+                alt="{{ image }}"
+                loading="lazy"
+            >
+        </a>
     {% endfor %}
+</div>
 {% endblock %}

@@ -1,0 +1,19 @@
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+}
+
+.gallery a {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.gallery img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
