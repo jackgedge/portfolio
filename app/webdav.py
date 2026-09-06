@@ -49,7 +49,7 @@ def get_image(folder, image):
 
     extension = os.path.splitext(image)[1]
 
-    temp_file: _TemporaryFileWrapper[bytes] = tempfile.NamedTemporaryFile(
+    temp_file: _TemporaryFileWrapper[bytes]= tempfile.NamedTemporaryFile(
         suffix=extension,
         delete=False,
     )
