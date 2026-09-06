@@ -4,8 +4,8 @@ from pathlib import Path
 import os 
 import tempfile
 
-PROJECT_DIR = Path(__file__).resolve().parent.parent
-ENV_FILE = PROJECT_DIR / ".env"
+PROJECT_DIR: Path = Path(__file__).resolve().parent.parent
+ENV_FILE: Path = PROJECT_DIR / ".env"
 
 load_dotenv(ENV_FILE)
 
@@ -25,18 +25,18 @@ PORTFOLIO_DIR: str | None = os.getenv('PORTFOLIO_DIR')
 
 def get_folders():
     folders = client.list(PORTFOLIO_DIR)[1:]
-    folders_clean = []
+    folders_clean: list[Unknown] = []
     for folder_name in folders:
         folders_clean.append(folder_name.strip('/'))
     return folders_clean
 
 def get_folder_images(folder):
-    folder_path = f"{PORTFOLIO_DIR}/{folder}"
+    folder_path: str = f"{PORTFOLIO_DIR}/{folder}"
     images = client.list(folder_path)[1:]
     return images
 
 def get_image(folder, image):
-    remote_path = (
+    remote_path: str = (
         f"{PORTFOLIO_DIR.rstrip('/')}/"
         f"{folder.strip('/')}/"
         f"{image.lstrip('/')}"
@@ -44,7 +44,7 @@ def get_image(folder, image):
 
     extension = os.path.splitext(image)[1]
 
-    temp_file = tempfile.NamedTemporaryFile(
+    temp_file: _TemporaryFileWrapper[bytes] = tempfile.NamedTemporaryFile(
         suffix=extension,
         delete=False,
     )
