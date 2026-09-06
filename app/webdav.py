@@ -28,11 +28,16 @@ def get_folders():
     folders_clean: list[Unknown] = []
     for folder_name in folders:
         folders_clean.append(folder_name.strip('/'))
+
+        #TODO Remove unwanted folders
+
     return folders_clean
 
 def get_folder_images(folder):
     folder_path: str = f"{PORTFOLIO_DIR}/{folder}"
     images = client.list(folder_path)[1:]
+    
+    #TODO Remove unwanted image types
     return images
 
 def get_image(folder, image):
