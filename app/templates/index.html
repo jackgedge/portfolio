@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-        {% for folder in folders %}
-            <li>
-                <a href="{{ url_for('main.folder', folder=folder) }}">
-                    {{ folder }}
-                </a>
-            </li>
-        {% endfor %}
+<ul class="list">
+    {% for folder in folders %}
+    <li>
+        <a
+            class="hover-heading"
+            href="{{ url_for('main.folder', folder=folder) }}"
+        >
+            <h2>{{ folder }}</h2>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<script src="{{ url_for('static', filename='index.js') }}"></script>
 {% endblock %}
