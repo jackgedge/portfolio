@@ -4,11 +4,17 @@ from pathlib import Path
 import os 
 import tempfile
 
+# Define project directory and environment file location.
 PROJECT_DIR: Path = Path(__file__).resolve().parent.parent
 ENV_FILE: Path = PROJECT_DIR / ".env"
+PORTFOLIO_DIR: str | None = os.getenv('PORTFOLIO_DIR')
 
+
+# Load environment variables
 load_dotenv(ENV_FILE)
 
+
+# Define WebDav options
 hostname: str | None = os.getenv('WEBDAV_HOSTNAME')
 login: str | None = os.getenv('WEBDAV_LOGIN')
 password: str | None = os.getenv('WEBDAV_PASSWORD')
@@ -19,13 +25,13 @@ options: dict[str | None, str | None] = {
     'webdav_password': password
 }
 
+# Create WebDav client
 client = Client(options)
 
-PORTFOLIO_DIR: str | None = os.getenv('PORTFOLIO_DIR')
 
 def get_folders():
     folders = client.list(PORTFOLIO_DIR)[1:]
-    folders_clean: list[Unknown] = []
+    folders_clean = []
     for folder_name in folders:
         folders_clean.append(folder_name.strip('/'))
 
@@ -33,12 +39,19 @@ def get_folders():
 
     return folders_clean
 
+
 def get_folder_images(folder):
     folder_path: str = f"{PORTFOLIO_DIR}/{folder}"
     images = client.list(folder_path)[1:]
-    
+
     #TODO Remove unwanted image types
+    desired_extensions: list[str] = [
+    ".jpg",
+    ".jpeg",
+    ]
+
     return images
+
 
 def get_image(folder, image):
     remote_path: str = (
