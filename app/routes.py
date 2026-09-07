@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_file, send_from_directory, after_this_request
+from flask import Blueprint, render_template, send_file, send_from_directory, after_this_request, url_for, redirect
 from .webdav import get_folders, get_folder_images, get_image
 import os
 
@@ -43,3 +43,18 @@ def image(folder, image):
         local_path,
         mimetype="image/jpeg",
     )
+
+
+dev_bp = Blueprint('dev', __name__)
+
+@dev_bp.route('/broken')
+def broken():
+    return render_template('broken.html')
+
+
+social_bp = Blueprint('social', __name__)
+
+@social_bp.route('/contact')
+def contact():
+    # TODO
+    return redirect(url_for('dev.broken'))
