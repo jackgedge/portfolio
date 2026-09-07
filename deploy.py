@@ -1,4 +1,3 @@
-from os import environ
 import os
 import sys
 
@@ -104,8 +103,22 @@ def create_dotenv(dry_run: bool = False):
 
     print(f"{file_name} updated successfully.")
 
+def create_systemd_service(systemd: bool = False):
+    file_name = "portfolio.service"
+    
+    service_file_exists: bool = os.path.exists(file_name) and os.path.isfile()
+    
+    if service_file_exists:
+        response: str = input(f"{file_name} exists. Create new one? [N]/y: ") or 'n'
+        if response.lower() in ('y', 'yes'):
+            #TODO
+            pass
+        else:
+            pass
+            
 if __name__ == "__main__":
     dry_run: bool = "--dry-run" in sys.argv or "-n" in sys.argv
+    systemd: bool = "--systemd" in sys.argv or "-d" in sys.argv
 
     check_conda()
 
