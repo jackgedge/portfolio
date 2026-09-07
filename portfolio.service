@@ -1,0 +1,22 @@
+[Unit]
+Description=Portfolio Flask application
+After=network.target
+
+[Service]
+User=jack
+Group=jack
+WorkingDirectory=/var/www/portfolio
+
+Environment="PATH=/home/<user>/anaconda3/envs/portfolio/bin"
+Environment="PYTHONUNBUFFERED=1"
+
+ExecStart=/home/<user>/anaconda3/envs/portfolio/bin/gunicorn \
+    --workers 3 \
+    --bind 127.0.0.1:8000 \
+    "app:portfolio()"
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
