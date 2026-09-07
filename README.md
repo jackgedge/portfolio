@@ -4,6 +4,10 @@ Portfolio is a Flask app designed to take a WebDav folder and present it as a ph
 
 ## Usage
 
+### Deploy
+
+### Run as systemd service
+
 ## TODO:
 - Deploy script
 - Update environment.yml

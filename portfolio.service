@@ -3,8 +3,8 @@ Description=Portfolio Flask application
 After=network.target
 
 [Service]
-User=jack
-Group=jack
+User=<user>
+Group=<group>
 WorkingDirectory=/var/www/portfolio
 
 Environment="PATH=/home/<user>/anaconda3/envs/portfolio/bin"

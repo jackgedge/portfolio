@@ -1,3 +1,7 @@
 # Create conda env from environment.yml
 
-# TODO
+# Create .env and populate with relevant empty variables. 
+# WEBDAV_HOSTNAME=""
+# WEBDAV_LOGIN=""
+# WEBDAV_PASSWORD=""
+# PORTFOLIO_DIR=""
