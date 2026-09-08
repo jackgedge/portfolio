@@ -1,8 +1,8 @@
+from tempfile import _TemporaryFileWrapper
 from flask.cli import load_dotenv
 from webdav3.client import Client
 from pathlib import Path
 import os 
-import tempfile
 import random
 
 # Define project directory and environment file location.
@@ -52,7 +52,7 @@ def get_folder_images(folder):
     
     clean_images = []
 
-    clean_images: list[Unknown] = [
+    clean_images: list[str] = [
         image
         for image in images
         if image.lower().endswith(tuple(IMAGE_FORMATS))
