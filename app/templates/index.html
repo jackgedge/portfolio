@@ -1,17 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<ul class="list">
-    {% for folder in folders %}
-    <li>
-        <a
-            class="hover-heading"
-            href="{{ url_for('main.folder', folder=folder) }}"
+<div class="gallery">
+    {% for image in random_images %}
+    <a href="{{ url_for(
+        'main.image',
+        folder=image['folder'],
+        image=image['image']
+    ) }}">
+        <img
+            src="{{ url_for(
+                'main.image',
+                folder=image['folder'],
+                image=image['image']
+            ) }}"
+            alt="{{ image['image'] }}"
         >
-            <h2>{{ folder }}</h2>
-        </a>
-    </li>
+    </a>
     {% endfor %}
-</ul>
+</div>
 
 {% endblock %}

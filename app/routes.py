@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, send_file, send_from_directory, after_this_request, url_for, redirect
-from .webdav import get_folders, get_folder_images, get_image
+from .webdav import get_folders, get_folder_images, get_image, get_random_images
 import os
 
 main_bp = Blueprint("main", __name__)
@@ -15,11 +15,13 @@ def favicon():
 @main_bp.route('/', methods=['GET'])
 def index():
     folders = get_folders()
-
+    random_images = get_random_images()
     #TODO Generate random selection of images from portfolio to display on home. 
 
     return render_template('index.html',
-    folders=folders)
+    folders=folders,
+    random_images=random_images,
+    )
 
 @main_bp.route('/<folder>', methods=['GET', 'POST'])
 def folder(folder):

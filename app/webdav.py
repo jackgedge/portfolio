@@ -3,16 +3,21 @@ from webdav3.client import Client
 from pathlib import Path
 import os 
 import tempfile
-
+import random
 
 # Define project directory and environment file location.
 PROJECT_DIR: Path = Path(__file__).resolve().parent.parent
 ENV_FILE: Path = PROJECT_DIR / ".env"
-PORTFOLIO_DIR: str | None = os.getenv('PORTFOLIO_DIR')
-
 
 # Load environment variables
 load_dotenv(ENV_FILE)
+
+PORTFOLIO_DIR: str | None = os.getenv('PORTFOLIO_DIR')
+
+IMAGE_FORMATS: list[str] = [
+    ".jpg",
+    ".jpeg",
+    ]
 
 
 # Define WebDav options
@@ -47,16 +52,10 @@ def get_folder_images(folder):
     
     clean_images = []
 
-    #TODO Remove unwanted image types
-    desired_extensions: list[str] = [
-    ".jpg",
-    ".jpeg",
-    ]
-
     clean_images: list[Unknown] = [
         image
         for image in images
-        if image.lower().endswith(tuple(desired_extensions))
+        if image.lower().endswith(tuple(IMAGE_FORMATS))
     ]
 
     return clean_images
@@ -92,3 +91,32 @@ def get_image(folder, image):
         except FileNotFoundError:
             pass
         raise
+
+
+def get_random_images():
+    folders = client.list(PORTFOLIO_DIR)[1:]
+    all_images = []
+
+    for raw_folder in folders:
+        folder = raw_folder.strip("/")
+
+        folder_path = (
+            f"{PORTFOLIO_DIR.rstrip('/')}/"
+            f"{folder}"
+        )
+
+        images = client.list(folder_path)[1:]
+
+        for raw_image in images:
+            image = raw_image.strip("/")
+
+            if image.lower().endswith(tuple(IMAGE_FORMATS)):
+                all_images.append({
+                    "folder": folder,
+                    "image": image,
+                })
+
+    return random.sample(
+        all_images,
+        min(8, len(all_images))
+    )
