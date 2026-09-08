@@ -3,6 +3,7 @@ from flask.cli import load_dotenv
 from webdav3.client import Client
 from pathlib import Path
 import os 
+import tempfile
 import random
 
 # Define project directory and environment file location.
