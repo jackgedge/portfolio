@@ -1,3 +1,13 @@
+html, body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    position: relative;
+}
+
 h1, h2 {
     display: block;
     text-align: center;
@@ -6,6 +16,7 @@ h1, h2 {
     font-size: 40px;
     text-decoration: none;
     color: white;
+    margin: auto;
 }
 
 a {
@@ -18,15 +29,12 @@ a {
     color: white;
 }
 
-html {
-    background-color: black;
-}
-
 img {
     width: auto;
     height: 100%;
-    display: flexbox;
+    display: block;
     align-self: center;
+    z-index: 1;
     }
 
 /* Remove bullets from ordered lists */
@@ -47,10 +55,81 @@ ul {
     width: 50%;
 }
 
+.topnav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 12px;
+    z-index: 99999;
+    overflow: visible;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    display: block;
+    padding: 14px 16px;
+    text-align: center;
+    float: center;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 100;
+    font-size: 40px;
+    color: white;
+}
+
+.dropbtn {
+    margin: 0;
+    border: 0;
+    background-color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 100;
+    font-size: 40px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: black;
+    min-width: 180px;
+    min-height: auto;
+    z-index: 10000;
+    display: none;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    display: block;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-align: left;
+    z-index: 100002;
+}
+
+.show {
+    display:block;
+}
+
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 12px;
+    position: relative;
+    z-index: 0;
 }
 
 .gallery a {
@@ -58,6 +137,8 @@ ul {
     aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 6px;
+    position: relative;
+    z-index: 0;
 }
 
 .gallery img {
@@ -65,11 +146,16 @@ ul {
     height: 100%;
     display: block;
     object-fit: cover;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
 }
 
 .hover-heading {
-  flex-shrink: 1;          /* Allows h1s to compress if needed */
+    flex-shrink: 1;          /* Allows h1s to compress if needed */
+    z-index: 1000001;
 }
+
 
 .list {
     list-style: none;
@@ -84,24 +170,3 @@ ul {
     flex: 1; /* Distribute available vertical space equally among items */
 }
 
-.topnav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-    float: center;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 100;
-    font-size: 40px;
-    text-decoration: none;
-    color: white;
-}

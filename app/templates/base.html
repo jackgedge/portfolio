@@ -27,7 +27,20 @@
     </header>
 
     <div class="topnav">
-        <a href="{{ url_for('main.index')}}">portfolio</a>
+        <div class="dropdown">
+            <button type="button" onclick="myFunction()" class="dropbtn">portfolio</button>
+            <div id="myDropdown" class="dropdown-content">
+                {% for folder in folders %}
+                    <a
+                        class="hover-heading"
+                        href="{{ url_for('main.folder', folder=folder) }}"
+                    >
+                        {{ folder }}
+                    </a>
+                {% endfor %}
+            </div>
+
+        </div>
         <a href="{{ url_for('social.contact')}}">contact</a>
     </div>
     <script src="{{ url_for('static', filename='index.js') }}"></script>

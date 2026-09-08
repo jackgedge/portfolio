@@ -38,3 +38,44 @@ topnavElements.forEach(function(topnavElement) {
         this.style.fontStyle = 'normal';
     });
 });
+
+
+var dropbtnElements = document.querySelectorAll('.dropbtn')
+
+dropbtnElements.forEach(function(dropbtnElement) {
+    // Add mouseover event listener
+    dropbtnElement.addEventListener('mouseover', function() {
+            // Make text bold
+            this.style.fontWeight = 'bold';
+            // Make text italic
+            this.style.fontStyle = 'italic';
+        });
+    // Add mouseout event listener
+    dropbtnElement.addEventListener('mouseout', function() {
+        // Remove bold style
+        this.style.fontWeight = 'normal';
+        // Reset rotation
+        this.style.fontStyle = 'normal';
+    });
+});
+
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+} 

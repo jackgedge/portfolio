@@ -23,12 +23,14 @@ def index():
 
 @main_bp.route('/<folder>', methods=['GET', 'POST'])
 def folder(folder):
+    folders = get_folders()
     images = get_folder_images(folder)
 
     return render_template(
         'folder.html',
         images=images,
-        folder=folder)
+        folder=folder,
+        folders=folders)
 
 @main_bp.route("/<folder>/<image>")
 def image(folder, image):
@@ -52,7 +54,11 @@ dev_bp = Blueprint('dev', __name__)
 
 @dev_bp.route('/broken')
 def broken():
-    return render_template('broken.html')
+    folders = get_folders()
+    return render_template(
+        'broken.html',
+        folders=folders
+    )
 
 
 social_bp = Blueprint('social', __name__)
