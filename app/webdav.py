@@ -3,7 +3,6 @@ from webdav3.client import Client
 from pathlib import Path
 import os 
 import tempfile
-from PIL import Image
 
 
 # Define project directory and environment file location.
@@ -42,26 +41,26 @@ def get_folders():
     return folders_clean
 
 
-def get_folder_images(folder, thumbnail_size=(150, 150)):
+def get_folder_images(folder):
     folder_path: str = f"{PORTFOLIO_DIR}/{folder}"
     images = client.list(folder_path)[1:]
+    
+    clean_images = []
 
-    desired_extensions = (".jpg", ".jpeg")
+    #TODO Remove unwanted image types
+    desired_extensions: list[str] = [
+    ".jpg",
+    ".jpeg",
+    ]
 
-    thumbnail_images: list[Unknown] = []
+    clean_images: list[Unknown] = [
+        image
+        for image in images
+        if image.lower().endswith(tuple(desired_extensions))
+    ]
 
-    for image in images:
-        if not image.lower().endswith(desired_extensions):
-            continue
+    return clean_images
 
-        image_path = Path(folder_path) / image
-
-        with Image.open(image_path) as img:
-            thumbnail = img.copy()
-            thumbnail.thumbnail(thumbnail_size)
-            thumbnail_images.append(thumbnail)
-
-    return thumbnail_images
 
 
 def get_image(folder, image):
