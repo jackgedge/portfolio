@@ -118,5 +118,5 @@ def get_random_images():
 
     return random.sample(
         all_images,
-        min(8, len(all_images))
+        min(15, len(all_images))
     )
