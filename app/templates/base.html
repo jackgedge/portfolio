@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>jack</title>
+    
     <link
         rel="icon"
         href="{{ url_for('static', filename='favicon.ico') }}"
@@ -15,15 +18,24 @@
         href="{{ url_for('static', filename='css/styles.css') }}"
     >
 </head>
+
+
 <body>
+    
     <header>
         <h2>jack</h2>
     </header>
+    
     <div class="topnav">
-        <a href="{{ url_for('main.index')}}">Home</a>
+        <a href="{{ url_for('main.index')}}">portfolio</a>
+        <a href="{{ url_for('social.contact')}}">contact</a>
     </div>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+
     <main>
         {% block content %}{% endblock %}
     </main>
 </body>
+
+
 </html>

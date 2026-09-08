@@ -19,3 +19,22 @@ h2Elements.forEach(function(h2Element) {
         this.style.fontStyle = 'normal';
     });
 });
+
+var topnavElements = document.querySelectorAll('.topnav a')
+
+topnavElements.forEach(function(topnavElement) {
+    // Add mouseover event listener
+    topnavElement.addEventListener('mouseover', function() {
+            // Make text bold
+            this.style.fontWeight = 'bold';
+            // Make text italic
+            this.style.fontStyle = 'italic';
+        });
+    // Add mouseout event listener
+    topnavElement.addEventListener('mouseout', function() {
+        // Remove bold style
+        this.style.fontWeight = 'normal';
+        // Reset rotation
+        this.style.fontStyle = 'normal';
+    });
+});
