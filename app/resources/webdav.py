@@ -48,6 +48,7 @@ def get_folders():
 
     return folders_clean
 
+
 def clean_images(images):
 
     clean_images = [] 
@@ -59,6 +60,7 @@ def clean_images(images):
     ]
     return clean_images
 
+
 def get_folder_images(folder):
     folder_path: str = f"{PORTFOLIO_DIR}/{folder}"
     images = client.list(folder_path)[1:]
@@ -66,59 +68,6 @@ def get_folder_images(folder):
     clean_images = clean_images(images)
 
     return clean_images
-
-def create_thumbnails(folder):
-    folder_path: str = f"{PORTFOLIO_DIR}/{folder}"
-    folder_contents = client.list(folder_path)[1:]
-    thumbnail_folder_path: str = f"{PORTFOLIO_DIR}/{folder}/{THUMBNAIL_DIR}"
-
-    if thumbnail_folder_path not in folder_contents:
-        client.mkdir(thumbnail_folder_path)
-        print(f"{thumbnail_folder_path} created.")
-    else: 
-        print(f"{thumbnail_folder_path} already exists.")
-
-    thumbnail_folder_contents = client.list(thumbnail_folder_path)
-    
-    for file in folder_contents:
-
-        file_path = f"{PORTFOLIO_DIR}/{folder}/{file}"
-
-        thumbnail_path = f"{PORTFOLIO_DIR}/{folder}/{THUMBNAIL_DIR}/tn_{file}"
-
-        extension = os.path.splitext(thumbnail_path)[1]
-
-        if file not in  thumbnail_folder_contents:
-            
-            temp_file: _TemporaryFileWrapper[bytes] = tempfile.NamedTemporaryFile(
-                suffix=extension,
-                delete_on_close=True
-            )
-            temp_path = temp_file.name
-
-            client.download_sync(
-                remote_path=file_path,
-                local_path=temp_path
-            )
-            
-            img = Image.open(temp_path)
-            res = img.resize((300, 300))
-            temp_file.close()
-
-            temp_file: _TemporaryFileWrapper[bytes]= tempfile.NamedTemporaryFile(
-                suffix=extension,
-                delete_on_close=True,
-            )
-            temp_path = temp_file.name
-
-            res.save(temp_path)
-
-            client.upload_sync(remote_path=thumbnail_path, local_path=temp_path)
-
-            temp_file.close()
-            
-
-
 
 
 def get_image(folder, image):
