@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, send_file, send_from_directory, after_this_request, url_for, redirect
-from .resources.webdav import get_folders, get_folder_images, get_image, get_random_images, clean_images
+from .resources.webdav import get_folders, get_folder_images, get_image, get_random_images, clean_images, get_folder_thumbnails, get_thumbnail
 import os
 
 main_bp = Blueprint("main", __name__)
@@ -29,8 +29,11 @@ def folder(folder):
 
     images = get_folder_images(folder)
 
+    thumbnails = get_folder_thumbnails(folder)
+
     return render_template(
         'folder.html',
+        thumbnails=thumbnails,
         images=images,
         folder=folder,
         folders=folders)
@@ -51,6 +54,25 @@ def image(folder, image):
         local_path,
         mimetype="image/jpeg",
     )
+
+@main_bp.route("/<folder>/.thumbnails/<thumbnail>")
+def thumbnail(folder, thumbnail):
+    local_path = get_thumbnail(folder, thumbnail)
+    
+    @after_this_request
+    def delete_temp_file(response):
+        try:
+            os.unlink(local_path)
+        except FileNotFoundError:
+            pass
+        return response
+
+    return send_file(
+        local_path,
+        mimetype="image/jpeg",
+    )
+
+
 
 
 dev_bp = Blueprint('dev', __name__)

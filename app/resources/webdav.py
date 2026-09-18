@@ -7,21 +7,7 @@ import tempfile
 import random
 from PIL import Image
 
-# Define project directory and environment file location.
-PROJECT_DIR: Path = Path(__file__).resolve().parent.parent
-ENV_FILE: Path = PROJECT_DIR / ".env"
-
-# Load environment variables
-load_dotenv(ENV_FILE)
-
-PORTFOLIO_DIR: str | None = os.getenv('PORTFOLIO_DIR')
-THUMBNAIL_DIR = ".thumbnails"
-
-IMAGE_FORMATS: list[str] = [
-    ".jpg",
-    ".jpeg",
-    ]
-
+from app import PORTFOLIO_DIR, THUMBNAIL_DIR, IMAGE_FORMATS
 
 # Define WebDav options
 hostname: str | None = os.getenv('WEBDAV_HOSTNAME')
@@ -51,23 +37,30 @@ def get_folders():
 
 def clean_images(images):
 
-    clean_images = [] 
+    clean_image_list = [] 
 
-    clean_images: list[str] = [
+    clean_image_list: list[str] = [
         image
         for image in images
         if image.lower().endswith(tuple(IMAGE_FORMATS))
     ]
-    return clean_images
+    return clean_image_list
 
 
 def get_folder_images(folder):
     folder_path: str = f"{PORTFOLIO_DIR}/{folder}"
     images = client.list(folder_path)[1:]
     
-    clean_images = clean_images(images)
+    clean_image_list = clean_images(images)
 
-    return clean_images
+    return clean_image_list
+
+
+def get_folder_thumbnails(folder):
+    thumbnail_folder_path: str = f"{PORTFOLIO_DIR}/{folder}/{THUMBNAIL_DIR}"
+    thumbnails = client.list(thumbnail_folder_path)[1:]
+    clean_thumbnail_list = clean_images(thumbnails)
+    return clean_thumbnail_list
 
 
 def get_image(folder, image):
@@ -78,6 +71,37 @@ def get_image(folder, image):
     )
 
     extension = os.path.splitext(image)[1]
+
+    temp_file: _TemporaryFileWrapper[bytes]= tempfile.NamedTemporaryFile(
+        suffix=extension,
+        delete=False,
+    )
+    temp_path = temp_file.name
+    temp_file.close()
+
+    try:
+        client.download_sync(
+            remote_path=remote_path,
+            local_path=temp_path,
+        )
+        return temp_path
+
+    except Exception:
+        try:
+            os.unlink(temp_path)
+        except FileNotFoundError:
+            pass
+        raise
+
+
+def get_thumbnail(folder, thumbnail):
+    remote_path: str = (
+        f"{PORTFOLIO_DIR.rstrip('/')}/"
+        f"{folder.strip('/')}/.thumbnails/"
+        f"{thumbnail.lstrip('/')}"
+    )
+
+    extension = os.path.splitext(thumbnail)[1]
 
     temp_file: _TemporaryFileWrapper[bytes]= tempfile.NamedTemporaryFile(
         suffix=extension,
