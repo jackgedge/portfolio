@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, send_file, send_from_directory, after_this_request, url_for, redirect
-from .webdav import get_folders, get_folder_images, get_image, get_random_images
+from .webdav import get_folders, get_folder_images, get_image, get_random_images, create_thumbnails, clean_images
 import os
 
 main_bp = Blueprint("main", __name__)
@@ -26,6 +26,7 @@ def index():
 @main_bp.route('/<folder>', methods=['GET', 'POST'])
 def folder(folder):
     folders = get_folders()
+    create_thumbnails(folder)
     images = get_folder_images(folder)
 
     return render_template(
