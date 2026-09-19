@@ -22,6 +22,7 @@ Run as with test local webdav server
 `WEBDAV_TEST=true flask --app app:portfolio run --debug`  
 
 ## Environment variables (.env)
+```
 WEBDAV_HOSTNAME=""  
 WEBDAV_LOGIN=""  
 WEBDAV_PASSWORD=""  
@@ -31,6 +32,7 @@ WEBDAV_TEST_HOSTNAME="http://127.0.0.1:8080"
 WEBDAV_TEST_LOGIN="test"
 WEBDAV_TEST_PASSWORD="password"
 PORTFOLIO_TEST_DIR="/"
+```
 
 ## Assumed WebDav root folder structure  
 root  
