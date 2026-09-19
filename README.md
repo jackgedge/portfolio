@@ -30,3 +30,7 @@ or (dry run)
 
 Export environment.yml
 `conda env export --no-builds | grep -v "^prefix: " > environment.yml`
+
+Run as with test local webdav server
+`python /home/jack/Code/portfolio/app/scripts/webdav_test.py`
+`WEBDAV_TEST=true flask --app app:portfolio run --debug`

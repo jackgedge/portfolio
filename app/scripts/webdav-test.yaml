@@ -1,0 +1,18 @@
+host: 127.0.0.1
+port: 8080
+
+provider_mapping:
+  "/": "/home/jack/Code/portfolio/app/webdav-test/publish"
+
+http_authenticator:
+  accept_basic: true
+  accept_digest: false
+  default_to_digest: false
+
+simple_dc:
+  user_mapping:
+    "*":
+      test:
+        password: password
+        roles:
+          - editor

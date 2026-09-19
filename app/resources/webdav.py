@@ -2,6 +2,7 @@ from typing import Any
 from tempfile import _TemporaryFileWrapper
 from flask.cli import load_dotenv
 from webdav3.client import Client
+from webdav3.exceptions import RemoteResourceNotFound
 from pathlib import Path
 import os 
 import tempfile
@@ -10,10 +11,21 @@ from PIL import Image
 
 from app import PORTFOLIO_DIR, THUMBNAIL_DIR, IMAGE_FORMATS
 
-# Define WebDav options
-hostname: str | None = os.getenv('WEBDAV_HOSTNAME')
-login: str | None = os.getenv('WEBDAV_LOGIN')
-password: str | None = os.getenv('WEBDAV_PASSWORD')
+webdav_test = os.getenv("WEBDAV_TEST", "false").lower() == "true"
+
+if webdav_test:
+    # Define WebDav Test options
+    hostname: str | None = os.getenv('WEBDAV_TEST_HOSTNAME')
+    login: str | None = os.getenv('WEBDAV_TEST_LOGIN')
+    password: str | None = os.getenv('WEBDAV_TEST_PASSWORD')
+
+    PORTFOLIO_DIR = os.getenv('PORTFOLIO_TEST_DIR')
+
+else:
+    # Define WebDav options
+    hostname: str | None = os.getenv('WEBDAV_HOSTNAME')
+    login: str | None = os.getenv('WEBDAV_LOGIN')
+    password: str | None = os.getenv('WEBDAV_PASSWORD')
 
 options: dict[str | None, str | None] = {
     'webdav_hostname': hostname,
@@ -26,13 +38,15 @@ client = Client(options)
 
 
 def get_folders():
-    folders = client.list(PORTFOLIO_DIR)[1:]
+    folders = client.list(PORTFOLIO_DIR)
+    folders = [folder for folder in folders if folder.endswith("/")] 
+
+    print(f"folders = {folders}")
     folders_clean = []
     for folder_name in folders:
         folders_clean.append(folder_name.strip('/'))
 
         #TODO Remove unwanted folders
-
     return folders_clean
 
 
@@ -146,7 +160,11 @@ def get_random_images(thumbnails=False):
                 f"{THUMBNAIL_DIR}"
             )
 
-        images = client.list(folder_path)[1:]
+        try:
+            images = client.list(folder_path)[1:]
+        except RemoteResourceNotFound:
+            print(f"Skipping missing folder: {folder_path}")
+            return []
 
         for raw_image in images:
             image = raw_image.strip("/")
