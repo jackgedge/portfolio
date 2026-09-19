@@ -21,7 +21,7 @@ Create conda env
 `conda env create -f environment.yml`
 
 Run app
-`python flask app:portfolio run --debug`  
+`python flask --app app:portfolio run --debug`  
 
 Run as with test local webdav server  
 `python /home/jack/Code/portfolio/app/scripts/webdav_test.py`  
