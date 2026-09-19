@@ -3,17 +3,9 @@
 {% block content %}
 <div class="gallery">
     {% for image in random_images %}
-    <a href="{{ url_for(
-        'main.image',
-        folder=image['folder'],
-        image=image['image']
-    ) }}">
+    <a href="{{ url_for('main.image', folder=image['folder'], image=image['image']) }}">
         <img
-            src="{{ url_for(
-                'main.thumbnail',
-                folder=image['folder'],
-                thumbnail=image['image']
-            ) }}"
+            src="{{ url_for('main.thumbnail',folder=image['folder'],thumbnail=image['image']) }}"
             alt="{{ image['image'] }}"
         >
     </a>

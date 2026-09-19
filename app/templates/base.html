@@ -46,15 +46,6 @@
         <a href="{{ url_for('social.contact')}}">contact</a>
     </div>
     <script src="{{ url_for('static', filename='index.js') }}"></script>
-    <div>
-        <ul class="breadcrumb">
-        <li><a href="{{ url_for('main.index')}}">Home</a></li>
-        <li><a href="#">Pictures</a></li>
-        <li><a href="#">Summer 15</a></li>
-        <li>Italy</li>
-        </ul>
-    </div>
-
     <main>
         {% block content %}{% endblock %}
     </main>
