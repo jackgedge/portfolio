@@ -15,8 +15,7 @@ def favicon():
 @main_bp.route('/', methods=['GET'])
 def index():
     folders = get_folders()
-    random_images = get_random_images()
-    #TODO Generate random selection of images from portfolio to display on home. 
+    random_images = get_random_images(thumbnails=True)
 
     return render_template('index.html',
     folders=folders,

@@ -1,3 +1,4 @@
+from typing import Any
 from tempfile import _TemporaryFileWrapper
 from flask.cli import load_dotenv
 from webdav3.client import Client
@@ -125,20 +126,25 @@ def get_thumbnail(folder, thumbnail):
         raise
 
 
-def get_random_images():
+def get_random_images(thumbnails=False):
     folders = client.list(PORTFOLIO_DIR)[1:]
 
-    all_images = []
+    all_images: list[str] = []
 
     for raw_folder in folders:
         folder = raw_folder.strip("/")
 
-
-
-        folder_path = (
-            f"{PORTFOLIO_DIR.rstrip('/')}/"
-            f"{folder}"
-        )
+        if thumbnails == False:
+            folder_path: str = (
+                f"{PORTFOLIO_DIR.rstrip('/')}/"
+                f"{folder}"
+            )
+        else:
+            folder_path: str = (
+                f"{PORTFOLIO_DIR.rstrip('/')}/"
+                f"{folder}/"
+                f"{THUMBNAIL_DIR}"
+            )
 
         images = client.list(folder_path)[1:]
 
