@@ -39,10 +39,13 @@ client = Client(options)
 
 def get_folders():
     folders = client.list(PORTFOLIO_DIR)
-    folders = [folder for folder in folders if folder.endswith("/")] 
+    unwanted_folders = [".comments"]
+    folders = [folder for folder in folders if folder.endswith("/") and folder.strip("/") not in unwanted_folders] 
 
-    print(f"folders = {folders}")
+    print(f"folders = {folders}") # Print for debug
+
     folders_clean = []
+
     for folder_name in folders:
         folders_clean.append(folder_name.strip('/'))
 
