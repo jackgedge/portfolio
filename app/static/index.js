@@ -78,4 +78,33 @@ window.onclick = function(event) {
       }
     }
   }
-} 
+}
+
+// Refresh page when user scrolls to bottom on mobile devices (Folder page infinite scroll)
+var folderGallery = document.getElementById('folder-gallery');
+
+if (folderGallery) {
+    // Reset scroll restoration so reloading starts at the top
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    var isRefreshing = false;
+
+    window.addEventListener('scroll', function() {
+        // Only run on mobile devices (screens 768px or narrower)
+        var isMobile = window.innerWidth <= 768;
+
+        if (isMobile && !isRefreshing) {
+            // Check if user has scrolled near the bottom of the page
+            var scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 20);
+
+            if (scrolledToBottom) {
+                isRefreshing = true;
+                window.scrollTo(0, 0);
+                window.location.reload();
+            }
+        }
+    });
+}
+ 
