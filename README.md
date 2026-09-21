@@ -35,12 +35,11 @@ PORTFOLIO_TEST_DIR="/"
 ```
 
 ## Assumed WebDav root folder structure  
-root  
-|  
-|---folder  
-        |  
-        |---image1.jpeg  
-        |---image2.jpeg...  
+├── root  
+    ├── folder  
+        ├── image1.jpeg  
+        ├── image2.jpeg  
+        └── ...  
 
 ## In Progress
 ### Deploy Script  
@@ -61,36 +60,4 @@ or (dry run)
 [] Nav bar  
 [] Photo sorting  
 
-.
-├── app
-│   ├── __init__.py
-│   ├── resources
-│   │   ├── __init__.py
-│   │   └── webdav.py
-│   ├── routes.py
-│   ├── scripts
-│   │   ├── create_thumbnails.py
-│   │   ├── delete_thumbnails.py
-│   │   ├── __init__.py
-│   │   ├── webdav_test.py
-│   │   └── webdav-test.yaml
-│   ├── static
-│   │   ├── css
-│   │   │   └── styles.css
-│   │   ├── fry_broken.jpg
-│   │   └── index.js
-│   ├── templates
-│   │   ├── base.html
-│   │   ├── broken.html
-│   │   ├── folder.html
-│   │   ├── image.html
-│   │   └── index.html
-│   └── webdav-test
-│       └── publish
-│           ├── folder
-│               └── images.jpg
-├── deploy.py
-├── environment.yml
-├── portfolio.service
-└── README.md
 
