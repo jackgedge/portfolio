@@ -80,10 +80,10 @@ window.onclick = function(event) {
   }
 }
 
-// Refresh page when user scrolls to bottom on mobile devices (Folder page infinite scroll)
-var folderGallery = document.getElementById('folder-gallery');
+// Refresh page when user scrolls to bottom on mobile devices (Index page infinite scroll)
+var indexGallery = document.getElementById('index-gallery');
 
-if (folderGallery) {
+if (indexGallery) {
     // Reset scroll restoration so reloading starts at the top
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';

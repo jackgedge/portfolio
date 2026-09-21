@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="gallery">
+<div class="gallery" id="index-gallery">
     {% for image in random_images %}
     <a href="{{ url_for('main.image', folder=image['folder'], image=image['image']) }}">
         <img

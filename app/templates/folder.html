@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="gallery" id="folder-gallery">
+<div class="gallery">
     {% for image in thumbnails %}
         <a href="{{ url_for('main.image', folder=folder, image=image) }}">
             <img
