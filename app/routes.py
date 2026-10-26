@@ -12,6 +12,10 @@ def favicon():
         mimetype="image/vnd.microsoft.icon"
     )
 
+@main_bp.app_errorhandler(500)
+def handle_server_error(error):
+    return redirect(url_for("main.index"))
+
 @main_bp.route('/', methods=['GET'])
 def index():
     folders = get_folders()
